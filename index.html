@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Circle Remix Effect</title>
+  <style>
+    body {
+      background: #000;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    .circle {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      background: radial-gradient(circle, #ff00ff, #00ffff);
+      box-shadow: 0 0 20px #0ff, 0 0 50px #f0f;
+      transition: transform 0.1s ease, box-shadow 0.1s ease;
+    }
+  </style>
+</head>
+<body>
+  <div class="circle" id="beatCircle"></div>
+
+  <script>
+    const circle = document.getElementById("beatCircle");
+
+    function beat() {
+      // Random scale between 1 and 1.6
+      const scale = 1 + Math.random() * 0.6;
+
+      // Random shadow intensity
+      const blur = Math.random() * 60 + 20;
+
+      // Apply style
+      circle.style.transform = `scale(${scale})`;
+      circle.style.boxShadow = `0 0 ${blur}px #0ff, 0 0 ${blur}px #f0f`;
+
+      // Call again in random interval (80-200ms)
+      const nextBeat = Math.random() * 120 + 80;
+      setTimeout(beat, nextBeat);
+    }
+
+    beat(); // Start the "fake beat"
+  </script>
+</body>
+</html>
