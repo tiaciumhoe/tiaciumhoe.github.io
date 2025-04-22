@@ -2,50 +2,86 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Circle Remix Effect</title>
+  <title>Circle Remix + Star Background</title>
   <style>
     body {
-      background: #000;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
+      margin: 0;
+      padding: 0;
+      background: black;
       overflow: hidden;
     }
 
+    .stars {
+      position: fixed;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+      background: transparent;
+    }
+
     .circle {
+      position: relative;
+      z-index: 1;
       width: 100px;
       height: 100px;
+      margin: auto;
+      top: 40vh;
       border-radius: 50%;
       background: radial-gradient(circle, #ff00ff, #00ffff);
       box-shadow: 0 0 20px #0ff, 0 0 50px #f0f;
       transition: transform 0.1s ease, box-shadow 0.1s ease;
     }
+
+    .star {
+      position: absolute;
+      background: white;
+      border-radius: 50%;
+      opacity: 0.2;
+      animation: twinkle 2s infinite ease-in-out;
+    }
+
+    @keyframes twinkle {
+      0%, 100% { opacity: 0.1; }
+      50% { opacity: 0.8; }
+    }
   </style>
 </head>
 <body>
+  <div class="stars" id="stars"></div>
   <div class="circle" id="beatCircle"></div>
 
   <script>
     const circle = document.getElementById("beatCircle");
 
     function beat() {
-      // Random scale between 1 and 1.6
       const scale = 1 + Math.random() * 0.6;
-
-      // Random shadow intensity
       const blur = Math.random() * 60 + 20;
 
-      // Apply style
       circle.style.transform = `scale(${scale})`;
       circle.style.boxShadow = `0 0 ${blur}px #0ff, 0 0 ${blur}px #f0f`;
 
-      // Call again in random interval (80-200ms)
       const nextBeat = Math.random() * 120 + 80;
       setTimeout(beat, nextBeat);
     }
 
-    beat(); // Start the "fake beat"
+    beat();
+
+    // ⭐ Tạo nền sao
+    const starContainer = document.getElementById("stars");
+    const numStars = 120;
+
+    for (let i = 0; i < numStars; i++) {
+      const star = document.createElement("div");
+      const size = Math.random() * 2 + 1;
+
+      star.className = "star";
+      star.style.width = `${size}px`;
+      star.style.height = `${size}px`;
+      star.style.top = `${Math.random() * 100}%`;
+      star.style.left = `${Math.random() * 100}%`;
+      star.style.animationDuration = `${Math.random() * 2 + 1}s`;
+      starContainer.appendChild(star);
+    }
   </script>
 </body>
 </html>
